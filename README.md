@@ -8,18 +8,19 @@ A skill is a self-contained, versioned workflow that teaches the agent how to do
 In practice, each skill lives in its own directory and is defined by a `SKILL.md` file (metadata + instructions),
 optionally backed by scripts and reference specs.
 
-## Repository layout
+### Learn more
 
-```text
-skills/<skill-name>/
-  SKILL.md
-  scripts/
-  references/
-```
+- [Using skills in Codex](https://developers.openai.com/codex/skills)
+- [Agent Skills open standard](https://agentskills.io/home)
 
 ## Included skills
 
 ### `git-commit`
+Install skills from this repo:
+
+```text
+$skill-installer install https://github.com/4096-bytes/skills/tree/main/skills/git-commit
+```
 
 Generates a Conventional Commits-style draft message using Git only (no build tools), preferring staged changes.
 It writes the draft to Git’s `COMMIT_EDITMSG` and prints a suggested `git commit ...` command.
@@ -42,6 +43,12 @@ Natural-language examples (prompts you can give the agent):
 
 ### `git-worktree`
 
+Install skills from this repo:
+
+```text
+$skill-installer install https://github.com/4096-bytes/skills/tree/main/skills/git-worktree
+```
+
 Manages Git worktrees under `../.atmu/<project-name>/` with safe path handling and optional IDE opening.
 Includes helpers to migrate uncommitted changes via stash and to copy gitignored `.env` / `.env.*` files into new worktrees.
 
@@ -60,55 +67,6 @@ Natural-language examples (prompts you can give the agent):
   - `$git-worktree remove "feature-ui"`
 - “I deleted a worktree folder manually; prune stale worktree references.”
   - `$git-worktree prune`
-
-## Installing a skill
-Install skills from this repo:
-
-```text
-$skill-installer install https://github.com/4096-bytes/skills/tree/main/skills/git-commit
-
-$skill-installer install https://github.com/4096-bytes/skills/tree/main/skills/git-worktree
-```
-
-After installing a skill, restart Codex to pick up new skills.
-
-### Manual install (optional)
-
-If you prefer not to use `$skill-installer`, copy or symlink the skill folder into `$CODEX_HOME/skills`.
-
-Copy:
-
-```bash
-export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
-mkdir -p "$CODEX_HOME/skills"
-
-cp -R "skills/git-commit" "$CODEX_HOME/skills/"
-cp -R "skills/git-worktree" "$CODEX_HOME/skills/"
-```
-
-Symlink (recommended for development):
-
-```bash
-export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
-mkdir -p "$CODEX_HOME/skills"
-
-ln -snf "$PWD/skills/git-commit" "$CODEX_HOME/skills/git-commit"
-ln -snf "$PWD/skills/git-worktree" "$CODEX_HOME/skills/git-worktree"
-```
-
-## Usage
-
-Once installed, either:
-
-- Invoke the skill from the agent (for example: `$git-commit ...` or `$git-worktree add ...`), or
-- Run the bundled scripts directly (examples above).
-
-For full specs and constraints, see each skill’s `SKILL.md` and `references/`.
-
-## Learn more
-
-- [Using skills in Codex](https://developers.openai.com/codex/skills)
-- [Agent Skills open standard](https://agentskills.io/home)
 
 ## License
 
