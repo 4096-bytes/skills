@@ -68,6 +68,32 @@ Natural-language examples (prompts you can give the agent):
 - “I deleted a worktree folder manually; prune stale worktree references.”
   - `$git-worktree prune`
 
+### `git-clean-branches`
+
+Install skills from this repo:
+
+```text
+$skill-installer install https://github.com/4096-bytes/skills/tree/main/skills/git-clean-branches
+```
+
+Safely identifies merged and/or stale Git branches and prints a deletion plan by default (dry-run).
+Requires `--yes` to apply deletions, supports protected branch patterns via `git config branch.cleanup.protected`,
+and can optionally delete remote branches as well.
+
+- Entry: `skills/git-clean-branches/SKILL.md`
+- Script: `skills/git-clean-branches/scripts/git_clean_branches.py`
+
+Natural-language examples (prompts you can give the agent):
+
+- “Show me which branches are merged into main and safe to delete.”
+  - `$git-clean-branches --dry-run`
+- “Find branches inactive for 90+ days and show what would be deleted.”
+  - `$git-clean-branches --stale 90`
+- “Delete merged branches against release/v2.1, including remote branches.”
+  - `$git-clean-branches --base "release/v2.1" --remote --yes`
+- “Force-delete a specific local branch that I know is obsolete.”
+  - `$git-clean-branches --force "outdated-feature" --yes`
+
 ## License
 
 MIT (see `LICENSE`).
